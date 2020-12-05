@@ -1,16 +1,26 @@
 <h1>新增卡片</h1>
-
-
-
-<%= form_for @cards do |f| %>
-
-<% end %>%>
-
-<%= form_tag @cards do |f| %>
-
+<%if @card.errors.any?%>
+<ul>
+  <%@card.errors.full_messages.each do |msg| %>
+  <li><%=msg%></li>
+  <%end%>
+</ul>
+<%end%>
+<%= form_for @card do |f| %>
+<div>
+  <%=f.label :title%>
+  <%= f.text_field :title %><br />
+</div>
+<div>
+  <%=f.label :content%><br />
+  <%= f.text_area :content %><br />
+</div>
+<%=f.submit :新增%>
 <% end %>
 
+<!-- 
+
 <form action="/cards" method="post">
-    Title:<input type="text">
-    <button type="subnit">新增</button>
-</form>
+  Title:<input type="text">
+  <button type="subnit">新增</button>
+</form> -->
