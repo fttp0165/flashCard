@@ -19,13 +19,15 @@
 .card{
       width: 300px;
       height: 150px;
+      background-color:lightpink;
       border:1px dotted  palegoldenrod;
-      .card-title{
+      .card_title{
             font-size: 18px;
       }
       .crad_body{ 
             background-color: lightblue;
             border:1px dotted  palegoldenrod;
+            height:auto;
             }
   
 }

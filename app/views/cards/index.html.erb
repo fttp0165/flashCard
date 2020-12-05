@@ -4,9 +4,9 @@
 
 <%@cards.each do |card|%>
 <div class="card">
-      <h2><%= card.title%></h2>
+      <header class="card_title"><%=link_to card.title,card_path(card)%></header>
       <%=link_to "編輯",edit_card_path(card)%>
-      <%=link_to "刪除","#"%>
+      <%=link_to "刪除",card_path(card),method:'delete',data:{confirm:"確定刪除"}%>
       <div class="crad_body">
             <p><%= card.content%></p>
       </div>
