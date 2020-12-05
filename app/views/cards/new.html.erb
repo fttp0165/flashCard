@@ -1,0 +1,16 @@
+<h1>新增卡片</h1>
+
+
+
+<%= form_for @cards do |f| %>
+
+<% end %>%>
+
+<%= form_tag @cards do |f| %>
+
+<% end %>
+
+<form action="/cards" method="post">
+    Title:<input type="text">
+    <button type="subnit">新增</button>
+</form>
