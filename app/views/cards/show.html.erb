@@ -1,12 +1,21 @@
 <h4>SHOW</h4>
-
-
-
-
-
 <div class="card">
-      <header class="card_title"><%=@card.title%></header>
-      <div class="crad_body">
-            <p><%=@card.content%></p>
-      </div>
+  <header class="card_title"><%=@card.title%></header>
+  <div class="crad_body">
+    <p><%=@card.content%></p>
+  </div>
 </div>
+
+<hr>
+<%=form_for @comment,url:card_comments_path(@card) do |f| %>
+<%=f.text_area :content %>
+<%=f.submit%>
+<%end%>
+
+<ul class="comment">
+  <% @comments.each do |comment|%>
+  <li>
+    <%=link_to '刪除',comment_path(comment),method: :delete,data:{ confirm:'sure?'}%>
+    <%=comment.content%></li>
+  <%end%>
+</ul>

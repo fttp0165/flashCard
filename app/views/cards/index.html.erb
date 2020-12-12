@@ -1,7 +1,7 @@
 <h1>卡片列表</h1>
-
 <%= link_to  "新增卡片", new_card_path%>
 
+<hr>
 <%@cards.each do |card|%>
 <div class="card">
       <header class="card_title"><%=link_to card.title,card_path(card)%></header>
@@ -9,6 +9,8 @@
       <%=link_to "刪除",card_path(card),method:'delete',data:{confirm:"確定刪除"}%>
       <div class="crad_body">
             <p><%= card.content%></p>
+            <p> <%=time_tag(card.created_at+28800)%></p>
+            <p> <%=time_ago_in_words(card.created_at)%></p>
       </div>
 </div>
 <%end%>
