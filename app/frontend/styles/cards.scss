@@ -25,13 +25,15 @@
       
       box-sizing: border-box;
       border:1px dotted  palegoldenrod;
+      overflow: hidden;
       .card_title{
             font-size: 18px;
       }
       .crad_body{ 
             background-color: lightblue;
             border:1px dotted  palegoldenrod;
-            height:auto;
+            height:100%;
+            
             }
       p{
          margin:1px;

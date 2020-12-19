@@ -1,8 +1,8 @@
 class CardsController < ApplicationController
-
-  before_action :set_card,only:[:show,:edit,:update,:destroy]
+  before_action :authenticate_user!,except: [:index,:show]
+  before_action :find_my_card,only:[:edit,:update,:destroy]
   before_action :clean_parims,only:[:create,:update]
-
+  
   def index      
     # render html: 'hello 123'
     #/app/views/cards/index.html.erb
@@ -16,7 +16,19 @@ class CardsController < ApplicationController
     @card=Card.new
   end
 
+  def like
+    card=Card.find(params[:id])
+    if current_user.like_cards.include?(card)
+      current_user.like_cards.delete(card)
+      render json: {status:0}
+    else
+      current_user.like_cards << card
+      render json: {status:1}
+    end
+  end
+
   def show
+    @card=Card.find(params[:id])
     @comment=Comment.new
     @comments=@card.comments
     .where(deleted_at: nil)
@@ -25,7 +37,7 @@ class CardsController < ApplicationController
   end
 
   def create
-    @card=Card.new(clean_parims)
+    @card=current_user.cards.new(clean_parims)
     if @card.save
      # flash[:notice]="新增卡片成功"
       redirect_to "/cards",notice: '新增卡片成功'
@@ -56,8 +68,10 @@ class CardsController < ApplicationController
     clean_parims=params.require(:card).permit(:title,:content)
   end
 
-  def set_card
-    @card=Card.find(params[:id])
+
+
+  def find_my_card
+    @card=current_user.cards.find(params[:id])
   end
 
 end

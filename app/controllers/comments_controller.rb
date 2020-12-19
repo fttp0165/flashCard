@@ -5,9 +5,9 @@ class CommentsController < ApplicationController
     @comment=@card.comments.new(comment_params)
     # @comment=Comment.new(comments_params)
     # @Comment.card=@card
-
     if @comment.save
-      redirect_to @card ,notice: '留言成功'
+      # redirect_to @card ,notice: '留言成功'
+      # "app/views/comment/create.js.erb"
     else
       render 'cards/show'
     end
