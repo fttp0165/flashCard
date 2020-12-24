@@ -5,5 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :cards
   has_many :favorite_cards
-  has_many :like_cards,through: :favorite_cards,source: :card
+  has_many :like_cards,through: :favorite_cards,source: 'card'
 end

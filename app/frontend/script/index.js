@@ -1,1 +1,1 @@
-import "./card"
+require("./card")
