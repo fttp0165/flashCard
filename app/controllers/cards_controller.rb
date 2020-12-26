@@ -4,20 +4,9 @@ class CardsController < ApplicationController
   before_action :clean_parims,only:[:create,:update]
   
   def import
-    require 'open-uri'
-    result = Nokogiri::HTML(URI.open('https://www.tenlong.com.tw/zh_tw/recent_bestselling?range=7'))
-    top10=result.css('.single-book .title a').first(10)
-    count=0
-    top10.each.with_index do |book,idx|
-      current_user.cards.find_or_create_by(content: book.text) do |b|
-        b.title = "top #{idx + 1}"
-        count += 1
-      end
-      # current_user.cards.create(
-      #   title: "top#{idx+1}",
-      #   content:book.text)
-    end
-    redirect_to root_path,notice:"卡片已匯入"
+    # TenlongJob.perform_later(current_user)
+    TenlongJob.set(wait: 5.seconds).perform_later(current_user)
+    redirect_to  root_path,notice:"卡片已匯入"
   end 
   def index      
     # render html: 'hello 123'
