@@ -70,8 +70,5 @@ class CardsController < ApplicationController
 
 
 
-  def find_my_card
-    @card=current_user.cards.find(params[:id])
-  end
-
+  
 end

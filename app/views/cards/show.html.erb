@@ -1,15 +1,26 @@
 <h4>SHOW</h4>
 <div class="card">
-  <header class="card_title">
-    <%=@card.title%>
-    <a href="#" class="like_btn" data-turbolinks-action="replace" data-card-id="<%= @card.id %>" >
-    <i class="far fa-thumbs-up"></i>
-    </a>  
-  </header>
+ 
+    <header class="card_title">
+      <h2 data-controller="icon" data-icon-card-id="<%= @card.id %>" >
+      <%=@card.title%>
+      <a data-action="icon#like" href="#" class="like_btn"  >
+        <%if @card.favorited_by?(current_user) %>
+        <i data-icon-target="thumb" class="far fa-thumbs-up"></i>
+        <%else%>
+        <i data-icon-target="thumb" class="fas fa-thumbs-up"></i>
+        <%end%>
+      </a>  
+    </h2>
+    </header>
+  
+
   <div class="crad_body">
     <p><%=@card.content%></p>
   </div>
+
 </div>
+
 
 <hr>
 <%=form_for @comment,url:card_comments_path(@card),remote: true do |f| %>
