@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       member do
         post :like
       end
+      collection do
+        get :import 
+      end
       resources :comments,shallow: true,except:[:index,:new,:show]
       #shallow: true 代替resources :comments,only:[:index,:new,:create]
     end

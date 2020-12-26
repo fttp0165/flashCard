@@ -3,11 +3,28 @@ class CardsController < ApplicationController
   before_action :find_my_card,only:[:edit,:update,:destroy]
   before_action :clean_parims,only:[:create,:update]
   
+  def import
+    require 'open-uri'
+    result = Nokogiri::HTML(URI.open('https://www.tenlong.com.tw/zh_tw/recent_bestselling?range=7'))
+    top10=result.css('.single-book .title a').first(10)
+    count=0
+    top10.each.with_index do |book,idx|
+      current_user.cards.find_or_create_by(content: book.text) do |b|
+        b.title = "top #{idx + 1}"
+        count += 1
+      end
+      # current_user.cards.create(
+      #   title: "top#{idx+1}",
+      #   content:book.text)
+    end
+    redirect_to root_path,notice:"卡片已匯入"
+  end 
   def index      
     # render html: 'hello 123'
     #/app/views/cards/index.html.erb
     #erb=embedded ruby
-    @cards=Card.order(id: :desc)
+    @cards=Card.page(params[:page]).per(10).order(id: :desc)
+    # @cards=Card.order(id: :desc)
     @my_date=Time.now
   end
 
@@ -66,6 +83,10 @@ class CardsController < ApplicationController
 
   def clean_parims
     clean_parims=params.require(:card).permit(:title,:content)
+  end
+  def find_my_card
+    @card = current_user.cards.find(params["id"])
+    # @card = Card.find_by(id: params["id"], user_id: current_user.id)
   end
 
 
